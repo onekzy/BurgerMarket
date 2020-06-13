@@ -9,7 +9,7 @@ import java.util.List;
 public class BurgerDto implements Serializable {
     @JsonProperty("id")
     private Long id;
-    @JsonProperty("id")
+    @JsonProperty("name")
     private String name;
     @JsonProperty("ingredients")
     private List<Ingredient> ingredients;
