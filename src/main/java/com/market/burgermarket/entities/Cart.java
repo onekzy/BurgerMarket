@@ -1,6 +1,7 @@
 package com.market.burgermarket.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -11,10 +12,13 @@ public class Cart {
     private Long id;
     @Column(name = "delivery_included")
     private boolean deliveryIncluded;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     @OneToMany
     private List<Burger> burgers;
-    @Transient
-    private double burgersCost;
+    @Column(name = "cost")
+    private BigDecimal burgersCost;
 
     public boolean isEmpty() {
         return burgers.isEmpty();
@@ -44,11 +48,11 @@ public class Cart {
         this.burgers = burgers;
     }
 
-    public double getBurgersCost() {
+    public BigDecimal getBurgersCost() {
         return burgersCost;
     }
 
-    public void setBurgersCost(double burgersCost) {
+    public void setBurgersCost(BigDecimal burgersCost) {
         this.burgersCost = burgersCost;
     }
 }

@@ -1,6 +1,7 @@
 package com.market.burgermarket.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ingredients")
@@ -13,7 +14,7 @@ public class Ingredient {
     @Column(name = "type")
     private String type;
     @Column(name = "cost")
-    private double cost;
+    private BigDecimal cost;
 
     public long getId() {
         return id;
@@ -39,11 +40,11 @@ public class Ingredient {
         this.type = type;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 }

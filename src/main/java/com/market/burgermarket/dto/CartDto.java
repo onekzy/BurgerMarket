@@ -5,6 +5,7 @@ import com.market.burgermarket.entities.Burger;
 import com.market.burgermarket.entities.User;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CartDto implements Serializable {
@@ -14,8 +15,10 @@ public class CartDto implements Serializable {
     private boolean deliveryIncluded;
     @JsonProperty("burgers")
     private List<Burger> burgers;
-    @JsonProperty("burgersCost")
-    private double burgersCost;
+    @JsonProperty("cost")
+    private BigDecimal burgersCost;
+    @JsonProperty("user")
+    private User user;
 
     public long getId() {
         return id;
@@ -41,11 +44,11 @@ public class CartDto implements Serializable {
         this.burgers = burgers;
     }
 
-    public double getBurgersCost() {
+    public BigDecimal getBurgersCost() {
         return burgersCost;
     }
 
-    public void setBurgersCost(double burgersCost) {
+    public void setBurgersCost(BigDecimal burgersCost) {
         this.burgersCost = burgersCost;
     }
 }
