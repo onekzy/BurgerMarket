@@ -1,21 +1,23 @@
 package com.market.burgermarket.converters;
 
+import com.market.burgermarket.dto.AddressDto;
+import com.market.burgermarket.dto.CartDto;
 import com.market.burgermarket.dto.UserDto;
 import com.market.burgermarket.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserToUserDtoConverter implements Converter<User, UserDto> {
-    private final AddressToAddressDtoConverter ad;
-    private final CartToCartDtoConverter ca;
+    private final ConversionService conversionService;
 
     @Autowired
-    public UserToUserDtoConverter(AddressToAddressDtoConverter ad, CartToCartDtoConverter ca) {
-        this.ad = ad;
-        this.ca = ca;
+    public UserToUserDtoConverter(ConversionService conversionService) {
+        this.conversionService = conversionService;
     }
+
 
     @Override
     public UserDto convert(User user) {
@@ -24,8 +26,8 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
         target.setFirstName(user.getFirstName());
         target.setLastName(user.getLastName());
         target.setEmail(user.getEmail());
-        target.setAddress(ad.convert(user.getAddress()));
-        target.setCart(ca.convert(user.getCart()));
+        target.setAddress(conversionService.convert(user.getAddress(), AddressDto.class));
+        target.setCart(conversionService.convert(user.getCart(), CartDto.class));
         return target;
     }
 }
