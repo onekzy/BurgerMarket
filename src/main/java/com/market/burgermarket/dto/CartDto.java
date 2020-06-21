@@ -1,7 +1,7 @@
 package com.market.burgermarket.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.market.burgermarket.entities.Burger;
 import com.market.burgermarket.entities.User;
 
 import java.io.Serializable;
@@ -13,12 +13,24 @@ public class CartDto implements Serializable {
     private Long id;
     @JsonProperty("deliveryIncluded")
     private boolean deliveryIncluded;
-    @JsonProperty("burgers")
-    private List<Burger> burgers;
+    @JsonIgnore
+    private User user;
+    @JsonIgnore
+    private List<BurgerDto> burgers;
     @JsonProperty("cost")
     private BigDecimal burgersCost;
-    @JsonProperty("user")
-    private User user;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public long getId() {
         return id;
@@ -36,11 +48,11 @@ public class CartDto implements Serializable {
         this.deliveryIncluded = deliveryIncluded;
     }
 
-    public List<Burger> getBurgers() {
+    public List<BurgerDto> getBurgers() {
         return burgers;
     }
 
-    public void setBurgers(List<Burger> burgers) {
+    public void setBurgers(List<BurgerDto> burgers) {
         this.burgers = burgers;
     }
 

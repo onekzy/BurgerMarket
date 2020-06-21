@@ -5,23 +5,23 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ingredients")
-public class Ingredient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Ingredient extends EntityBase {
     @Column(name = "name")
     private String name;
     @Column(name = "type")
     private String type;
     @Column(name = "cost")
     private BigDecimal cost;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "burger_id", referencedColumnName = "id")
+    private Burger burger;
 
-    public long getId() {
-        return id;
+    public Burger getBurger() {
+        return burger;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setBurger(Burger burger) {
+        this.burger = burger;
     }
 
     public String getName() {

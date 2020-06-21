@@ -1,8 +1,6 @@
 package com.market.burgermarket.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.market.burgermarket.entities.Address;
-import com.market.burgermarket.entities.Cart;
 
 import java.io.Serializable;
 
@@ -16,9 +14,9 @@ public class UserDto implements Serializable {
     @JsonProperty("email")
     private String email;
     @JsonProperty("address")
-    private Address address;
+    private AddressDto address;
     @JsonProperty("cart")
-    private Cart cart;
+    private CartDto cart;
 
     public long getId() {
         return id;
@@ -52,19 +50,19 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
-    public Address getAddress() {
+    public AddressDto getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressDto address) {
         this.address = address;
     }
 
-    public Cart getCart() {
+    public CartDto getCart() {
         return cart;
     }
 
-    public void setCart(Cart cart) {
+    public void setCart(CartDto cart) {
         this.cart = cart;
     }
 }

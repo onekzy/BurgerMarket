@@ -5,22 +5,21 @@ import java.util.List;
 
 @Entity
 @Table(name = "burgers")
-public class Burger {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Burger extends EntityBase {
     @Column(name = "name")
     private String name;
-
-    @OneToMany
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
+    @OneToMany(mappedBy = "burger", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
 
-    public long getId() {
-        return id;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public String getName() {

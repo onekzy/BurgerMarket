@@ -4,12 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "addresses")
-public class Address {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class Address extends EntityBase {
     @Column(name = "city")
     private String city;
     @Column(name = "street")
@@ -18,13 +13,15 @@ public class Address {
     private String building;
     @Column(name = "room")
     private String room;
+    @OneToOne(mappedBy = "address")
+    private User user;
 
-    public long getId() {
-        return id;
+    public User getUser() {
+        return user;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getCity() {

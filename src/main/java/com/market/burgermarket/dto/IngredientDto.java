@@ -14,6 +14,20 @@ public class IngredientDto implements Serializable {
     private String type;
     @JsonProperty("cost")
     private BigDecimal cost;
+    @JsonProperty("burger")
+    private BurgerDto burger;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BurgerDto getBurger() {
+        return burger;
+    }
+
+    public void setBurger(BurgerDto burger) {
+        this.burger = burger;
+    }
 
     public long getId() {
         return id;

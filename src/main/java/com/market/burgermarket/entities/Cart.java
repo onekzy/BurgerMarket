@@ -6,30 +6,26 @@ import java.util.List;
 
 @Entity
 @Table(name = "carts")
-public class Cart {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Cart extends EntityBase {
     @Column(name = "delivery_included")
     private boolean deliveryIncluded;
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "cart")
     private User user;
-    @OneToMany
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<Burger> burgers;
     @Column(name = "cost")
     private BigDecimal burgersCost;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public boolean isEmpty() {
         return burgers.isEmpty();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public boolean isDeliveryIncluded() {
