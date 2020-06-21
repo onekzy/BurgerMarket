@@ -3,6 +3,7 @@ package com.market.burgermarket.services;
 import com.market.burgermarket.dto.IngredientDto;
 import com.market.burgermarket.entities.Ingredient;
 import com.market.burgermarket.repositories.IngredientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
     private final ConversionService conversionService;
 
+    @Autowired
     public IngredientServiceImpl(IngredientRepository ingredientRepository, ConversionService conversionService) {
         this.ingredientRepository = ingredientRepository;
         this.conversionService = conversionService;

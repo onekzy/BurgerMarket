@@ -3,6 +3,7 @@ package com.market.burgermarket.services;
 import com.market.burgermarket.dto.CartDto;
 import com.market.burgermarket.entities.Cart;
 import com.market.burgermarket.repositories.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final ConversionService conversionService;
 
+    @Autowired
     public CartServiceImpl(CartRepository cartRepository, ConversionService conversionService) {
         this.cartRepository = cartRepository;
         this.conversionService = conversionService;

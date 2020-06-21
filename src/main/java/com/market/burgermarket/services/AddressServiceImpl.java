@@ -3,6 +3,7 @@ package com.market.burgermarket.services;
 import com.market.burgermarket.dto.AddressDto;
 import com.market.burgermarket.entities.Address;
 import com.market.burgermarket.repositories.AddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final ConversionService conversionService;
 
+    @Autowired
     public AddressServiceImpl(AddressRepository addressRepository, ConversionService conversionService) {
         this.addressRepository = addressRepository;
         this.conversionService = conversionService;
