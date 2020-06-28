@@ -1,4 +1,4 @@
 {
-  "deliveryIncluded" : false,
-  "cost" : 0
+  "id": 1,
+  "deliveryIncluded" : true
 }
