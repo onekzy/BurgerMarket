@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "carts")
+@Table(name = "cart")
 public class Cart extends EntityBase {
     @Column(name = "delivery_included")
     private boolean deliveryIncluded;

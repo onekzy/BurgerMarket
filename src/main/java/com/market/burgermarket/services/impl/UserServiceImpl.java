@@ -1,8 +1,9 @@
-package com.market.burgermarket.services;
+package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.UserDto;
 import com.market.burgermarket.entities.User;
 import com.market.burgermarket.repositories.UserRepository;
+import com.market.burgermarket.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        User person = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Person is not found"));
-        userRepository.delete(person);
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Person is not found"));
+        userRepository.delete(user);
     }
 }

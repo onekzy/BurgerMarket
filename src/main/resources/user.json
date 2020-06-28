@@ -1,18 +1,15 @@
 {
-  "id" : 1,
   "first_name" : "Alexey",
   "last_name" : "Ramaev",
   "email" : "hamert4@yandex.ru",
   "address" : {
-    "id" : 1,
     "city" : "NiNo",
     "street" : "Gagarina",
     "building" : "666",
     "room" : "777"
   },
   "cart" : {
-    "id" : 1,
-    "deliveryIncluded" : true,
-    "cost" : 654
+    "deliveryIncluded" : false,
+    "cost" : 0
   }
 }

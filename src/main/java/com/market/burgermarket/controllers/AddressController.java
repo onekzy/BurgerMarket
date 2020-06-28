@@ -27,12 +27,12 @@ public class AddressController {
         return addressService.getAddressById(id);
     }
 
-    @PostMapping
+    @PutMapping
     public AddressDto updateAddress(@RequestBody AddressDto addressDto) {
         return addressService.updateAddress(addressDto);
     }
 
-    @PutMapping
+    @PostMapping
     public AddressDto saveAddress(@RequestBody AddressDto addressDto) {
         return addressService.createAddress(addressDto);
     }

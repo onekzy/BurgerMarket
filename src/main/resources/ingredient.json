@@ -1,15 +1,5 @@
 {
-  "id" : 1,
   "name" : "cheese",
   "type" : "dope",
-  "cost" : 123,
-  "burger" : {
-    "id" : 1,
-    "name" : "MegaBurger",
-    "cart" : {
-      "id" : 1,
-      "deliveryIncluded" : true,
-      "cost" : 654
-    }
-  }
+  "price" : 123
 }

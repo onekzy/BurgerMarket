@@ -1,8 +1,13 @@
-package com.market.burgermarket.services;
+package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.BurgerDto;
+import com.market.burgermarket.dto.MenuDto;
 import com.market.burgermarket.entities.Burger;
+import com.market.burgermarket.entities.Menu;
 import com.market.burgermarket.repositories.BurgerRepository;
+import com.market.burgermarket.repositories.MenuRepository;
+import com.market.burgermarket.services.BurgerService;
+import com.market.burgermarket.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -15,11 +20,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class BurgerServiceImpl implements BurgerService {
     private final BurgerRepository burgerRepository;
+    private final MenuRepository menuRepository;
     private final ConversionService conversionService;
 
     @Autowired
-    public BurgerServiceImpl(BurgerRepository burgerRepository, ConversionService conversionService) {
+    public BurgerServiceImpl(BurgerRepository burgerRepository, MenuRepository menuRepository, ConversionService conversionService) {
         this.burgerRepository = burgerRepository;
+        this.menuRepository = menuRepository;
         this.conversionService = conversionService;
     }
 
@@ -37,8 +44,12 @@ public class BurgerServiceImpl implements BurgerService {
     }
 
     @Override
-    public BurgerDto createBurger(BurgerDto burgerDto) {
+    public BurgerDto createBurger(Long menuId, BurgerDto burgerDto) {
+        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new RuntimeException("Menu is not found"));
         Burger burger = conversionService.convert(burgerDto, Burger.class);
+        burger.setMenu(menu);
+        menu.getBurgers().add(burger);
+        //menuRepository.save(menu);
         return conversionService.convert(burgerRepository.save(burger), BurgerDto.class);
     }
 

@@ -1,8 +1,9 @@
-package com.market.burgermarket.services;
+package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.AddressDto;
 import com.market.burgermarket.entities.Address;
 import com.market.burgermarket.repositories.AddressRepository;
+import com.market.burgermarket.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;

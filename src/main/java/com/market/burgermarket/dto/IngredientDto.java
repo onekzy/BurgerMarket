@@ -1,5 +1,6 @@
 package com.market.burgermarket.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -12,9 +13,9 @@ public class IngredientDto implements Serializable {
     private String name;
     @JsonProperty("type")
     private String type;
-    @JsonProperty("cost")
-    private BigDecimal cost;
-    @JsonProperty("burger")
+    @JsonProperty("price")
+    private BigDecimal price;
+    @JsonIgnore
     private BurgerDto burger;
 
     public void setId(Long id) {
@@ -29,12 +30,8 @@ public class IngredientDto implements Serializable {
         this.burger = burger;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -53,11 +50,11 @@ public class IngredientDto implements Serializable {
         this.type = type;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

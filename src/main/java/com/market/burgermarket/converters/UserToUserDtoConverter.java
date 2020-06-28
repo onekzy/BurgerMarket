@@ -18,7 +18,6 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
         this.conversionService = conversionService;
     }
 
-
     @Override
     public UserDto convert(User user) {
         UserDto target = new UserDto();

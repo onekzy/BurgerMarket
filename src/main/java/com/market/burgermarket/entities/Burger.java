@@ -4,15 +4,26 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "burgers")
+@Table(name = "burger")
 public class Burger extends EntityBase {
     @Column(name = "name")
     private String name;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private Cart cart;
-    @OneToMany(mappedBy = "burger", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "menu_id", nullable = false)
+    private Menu menu;
+    @OneToMany(mappedBy = "burger", fetch = FetchType.LAZY)
     private List<Ingredient> ingredients;
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 
     public Cart getCart() {
         return cart;

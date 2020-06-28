@@ -1,13 +1,21 @@
-package com.market.burgermarket.services;
+package com.market.burgermarket.services.impl;
 
+import com.market.burgermarket.dto.BurgerDto;
 import com.market.burgermarket.dto.CartDto;
+import com.market.burgermarket.entities.Burger;
 import com.market.burgermarket.entities.Cart;
+import com.market.burgermarket.entities.Ingredient;
+import com.market.burgermarket.entities.User;
 import com.market.burgermarket.repositories.CartRepository;
+import com.market.burgermarket.repositories.UserRepository;
+import com.market.burgermarket.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,11 +23,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
+    private final UserRepository userRepository;
     private final ConversionService conversionService;
 
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository, ConversionService conversionService) {
+    public CartServiceImpl(CartRepository cartRepository, UserRepository userRepository, ConversionService conversionService) {
         this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
         this.conversionService = conversionService;
     }
 
@@ -46,8 +56,14 @@ public class CartServiceImpl implements CartService {
     public CartDto updateCart(CartDto cartDto) {
         Cart cart = cartRepository
                 .findById(cartDto.getId()).orElseThrow(() -> new RuntimeException("Cart is not found"));
+        BigDecimal cost = cart.getBurgers()
+                .stream()
+                .map(Burger::getIngredients)
+                .flatMap(Collection::stream)
+                .map(Ingredient::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         cart.setDeliveryIncluded(cartDto.isDeliveryIncluded());
-        cart.setBurgersCost(cartDto.getBurgersCost());
+        cart.setBurgersCost(cost);
         return conversionService.convert(cartRepository.save(cart), CartDto.class);
     }
 
@@ -55,5 +71,15 @@ public class CartServiceImpl implements CartService {
     public void deleteCart(Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new RuntimeException("Cart is not found"));
         cartRepository.delete(cart);
+    }
+
+    @Override
+    public List<BurgerDto> getBurgersByUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User is not found"));
+        List<BurgerDto> burgerList = user.getCart().getBurgers()
+                .stream()
+                .map(burger -> conversionService.convert(burger, BurgerDto.class))
+                .collect(Collectors.toList());
+        return burgerList;
     }
 }

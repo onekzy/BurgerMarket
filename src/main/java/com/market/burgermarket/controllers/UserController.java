@@ -27,12 +27,12 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping
+    @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) {
         return userService.updateUser(userDto);
     }
 
-    @PutMapping
+    @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
         return userService.createUser(userDto);
     }

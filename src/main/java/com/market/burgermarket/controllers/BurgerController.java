@@ -25,14 +25,9 @@ public class BurgerController {
         return burgerService.getBurgerById(id);
     }
 
-    @PostMapping
+    @PutMapping
     public BurgerDto updateBurger(@RequestBody BurgerDto burgerDto) {
         return burgerService.updateBurger(burgerDto);
-    }
-
-    @PutMapping
-    public BurgerDto saveBurger(@RequestBody BurgerDto burgerDto) {
-        return burgerService.createBurger(burgerDto);
     }
 
     @DeleteMapping(value = "/{id}")

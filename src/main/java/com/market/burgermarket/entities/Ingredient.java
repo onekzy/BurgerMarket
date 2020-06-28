@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ingredients")
+@Table(name = "ingredient")
 public class Ingredient extends EntityBase {
     @Column(name = "name")
     private String name;
     @Column(name = "type")
     private String type;
-    @Column(name = "cost")
-    private BigDecimal cost;
+    @Column(name = "price")
+    private BigDecimal price;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "burger_id", referencedColumnName = "id")
     private Burger burger;
@@ -40,11 +40,11 @@ public class Ingredient extends EntityBase {
         this.type = type;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

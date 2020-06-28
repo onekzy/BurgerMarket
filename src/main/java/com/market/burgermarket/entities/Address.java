@@ -3,7 +3,7 @@ package com.market.burgermarket.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "address")
 public class Address extends EntityBase {
     @Column(name = "city")
     private String city;

@@ -1,8 +1,11 @@
-package com.market.burgermarket.services;
+package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.IngredientDto;
+import com.market.burgermarket.entities.Burger;
 import com.market.burgermarket.entities.Ingredient;
+import com.market.burgermarket.repositories.BurgerRepository;
 import com.market.burgermarket.repositories.IngredientRepository;
+import com.market.burgermarket.services.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -15,11 +18,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
+    private final BurgerRepository burgerRepository;
     private final ConversionService conversionService;
 
     @Autowired
-    public IngredientServiceImpl(IngredientRepository ingredientRepository, ConversionService conversionService) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository, BurgerRepository burgerRepository, ConversionService conversionService) {
         this.ingredientRepository = ingredientRepository;
+        this.burgerRepository = burgerRepository;
         this.conversionService = conversionService;
     }
 
@@ -38,8 +43,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientDto createIngredient(IngredientDto ingredientDto) {
+    public IngredientDto createIngredient(Long burgerID, IngredientDto ingredientDto) {
         Ingredient ingredient = conversionService.convert(ingredientDto, Ingredient.class);
+        Burger burger = burgerRepository.findById(burgerID).orElseThrow(() -> new RuntimeException("Burger is not found"));
+        burger.getIngredients().add(ingredient);
+        ingredient.setBurger(burger);
         return conversionService.convert(ingredientRepository.save(ingredient), IngredientDto.class);
     }
 
@@ -47,7 +55,7 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientDto updateIngredient(IngredientDto ingredientDto) {
         Ingredient ingredient = ingredientRepository
                 .findById(ingredientDto.getId()).orElseThrow(() -> new RuntimeException("Ingredient is not found"));
-        ingredient.setCost(ingredientDto.getCost());
+        ingredient.setPrice(ingredientDto.getPrice());
         ingredient.setType(ingredientDto.getType());
         ingredientDto.setName(ingredientDto.getName());
         return conversionService.convert(ingredientRepository.save(ingredient), IngredientDto.class);

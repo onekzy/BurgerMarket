@@ -1,5 +1,6 @@
 package com.market.burgermarket.controllers;
 
+import com.market.burgermarket.dto.BurgerDto;
 import com.market.burgermarket.dto.CartDto;
 import com.market.burgermarket.services.CartService;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/cart")
+@RequestMapping("/user/{userId}/cart")
 public class CartController {
     private final CartService cartService;
 
@@ -15,7 +16,7 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping
+    @GetMapping(value = "/all")
     public List<CartDto> getAllCarts() {
         return cartService.getAll();
     }
@@ -25,12 +26,17 @@ public class CartController {
         return cartService.getCartById(id);
     }
 
-    @PostMapping
+    @GetMapping
+    public List<BurgerDto> getOrder(@PathVariable(value = "userId") Long userId) {
+        return cartService.getBurgersByUser(userId);
+    }
+
+    @PutMapping
     public CartDto updateCart(@RequestBody CartDto cartDto) {
         return cartService.updateCart(cartDto);
     }
 
-    @PutMapping
+    @PostMapping
     public CartDto saveCart(@RequestBody CartDto cartDto) {
         return cartService.createCart(cartDto);
     }

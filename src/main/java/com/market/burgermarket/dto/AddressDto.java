@@ -16,11 +16,11 @@ public class AddressDto implements Serializable {
     @JsonProperty("room")
     private String room;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

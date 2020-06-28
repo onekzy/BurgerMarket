@@ -26,7 +26,7 @@ public class UserDtoToUserConverter implements Converter<UserDto, User> {
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setAddress(conversionService.convert(userDto.getAddress(), Address.class));
-        user.setCart(conversionService.convert(userDto.getAddress(), Cart.class));
+        user.setCart(conversionService.convert(userDto.getCart(), Cart.class));
         return user;
     }
 }
