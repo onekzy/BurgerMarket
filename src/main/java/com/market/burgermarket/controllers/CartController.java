@@ -2,6 +2,7 @@ package com.market.burgermarket.controllers;
 
 import com.market.burgermarket.dto.BurgerDto;
 import com.market.burgermarket.dto.CartDto;
+import com.market.burgermarket.dto.TicketDto;
 import com.market.burgermarket.services.CartService;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,13 +33,18 @@ public class CartController {
     }
 
     @PutMapping
-    public CartDto updateCart(@RequestBody CartDto cartDto) {
-        return cartService.updateCart(cartDto);
+    public CartDto updateCart(@PathVariable("userId") Long userId, @RequestBody CartDto cartDto) {
+        return cartService.updateCart(userId, cartDto);
     }
 
     @PostMapping
     public CartDto saveCart(@RequestBody CartDto cartDto) {
         return cartService.createCart(cartDto);
+    }
+
+    @PostMapping(value = "{id}/ticket")
+    public TicketDto createTicket(@PathVariable("userId") Long userId) {
+        return cartService.createTicket(userId);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,13 +1,11 @@
 package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.BurgerDto;
-import com.market.burgermarket.dto.MenuDto;
 import com.market.burgermarket.entities.Burger;
 import com.market.burgermarket.entities.Menu;
 import com.market.burgermarket.repositories.BurgerRepository;
 import com.market.burgermarket.repositories.MenuRepository;
 import com.market.burgermarket.services.BurgerService;
-import com.market.burgermarket.services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -49,7 +47,6 @@ public class BurgerServiceImpl implements BurgerService {
         Burger burger = conversionService.convert(burgerDto, Burger.class);
         burger.setMenu(menu);
         menu.getBurgers().add(burger);
-        //menuRepository.save(menu);
         return conversionService.convert(burgerRepository.save(burger), BurgerDto.class);
     }
 
@@ -58,6 +55,7 @@ public class BurgerServiceImpl implements BurgerService {
         Burger burger = burgerRepository
                 .findById(burgerDto.getId()).orElseThrow(() -> new RuntimeException("Burger is not found"));
         burger.setName(burgerDto.getName());
+        burger.setDiscount(burgerDto.getDiscount());
         return conversionService.convert(burgerRepository.save(burger), BurgerDto.class);
     }
 

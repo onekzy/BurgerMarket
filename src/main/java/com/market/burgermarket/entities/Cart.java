@@ -15,6 +15,16 @@ public class Cart extends EntityBase {
     private List<Burger> burgers;
     @Column(name = "cost")
     private BigDecimal burgersCost;
+    @Column(name = "discount")
+    private BigDecimal discount;
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
 
     public User getUser() {
         return user;

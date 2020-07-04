@@ -2,6 +2,7 @@
   "first_name" : "Alexey",
   "last_name" : "Ramaev",
   "email" : "hamert4@yandex.ru",
+  "bonus_points" : 0,
   "address" : {
     "city" : "NiNo",
     "street" : "Gagarina",

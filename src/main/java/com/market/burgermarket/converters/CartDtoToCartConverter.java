@@ -14,6 +14,7 @@ public class CartDtoToCartConverter implements Converter<CartDto, Cart> {
         cart.setId(cartDto.getId());
         cart.setBurgersCost(cartDto.getBurgersCost());
         cart.setDeliveryIncluded(cartDto.isDeliveryIncluded());
+        cart.setDiscount(cartDto.getDiscount());
         return cart;
     }
 }

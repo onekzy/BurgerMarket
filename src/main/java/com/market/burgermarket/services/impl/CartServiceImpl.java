@@ -2,11 +2,10 @@ package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.BurgerDto;
 import com.market.burgermarket.dto.CartDto;
-import com.market.burgermarket.entities.Burger;
-import com.market.burgermarket.entities.Cart;
-import com.market.burgermarket.entities.Ingredient;
-import com.market.burgermarket.entities.User;
+import com.market.burgermarket.dto.TicketDto;
+import com.market.burgermarket.entities.*;
 import com.market.burgermarket.repositories.CartRepository;
+import com.market.burgermarket.repositories.TicketRepository;
 import com.market.burgermarket.repositories.UserRepository;
 import com.market.burgermarket.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,12 +23,14 @@ import java.util.stream.Collectors;
 public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
+    private final TicketRepository ticketRepository;
     private final ConversionService conversionService;
 
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository, UserRepository userRepository, ConversionService conversionService) {
+    public CartServiceImpl(CartRepository cartRepository, UserRepository userRepository, TicketRepository ticketRepository, ConversionService conversionService) {
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;
+        this.ticketRepository = ticketRepository;
         this.conversionService = conversionService;
     }
 
@@ -53,17 +54,26 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDto updateCart(CartDto cartDto) {
-        Cart cart = cartRepository
-                .findById(cartDto.getId()).orElseThrow(() -> new RuntimeException("Cart is not found"));
-        BigDecimal cost = cart.getBurgers()
-                .stream()
-                .map(Burger::getIngredients)
-                .flatMap(Collection::stream)
-                .map(Ingredient::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    public CartDto updateCart(Long userId, CartDto cartDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User is not found"));
+        Cart cart = user.getCart();
+        List<BigDecimal> burgersCosts = new ArrayList<>();
+        List<BigDecimal> noDiscountBurgersCosts = new ArrayList<>();
+        for (Burger burger : cart.getBurgers()) {
+            BigDecimal cost = burger.getIngredients()
+                    .stream()
+                    .map(Ingredient::getPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            noDiscountBurgersCosts.add(cost);
+            burgersCosts.add(cost.multiply(new BigDecimal(1)
+                    .subtract(burger.getDiscount()
+                            .divide(new BigDecimal(100)))));
+        }
+        BigDecimal totalCost = burgersCosts.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal noDiscountCost = noDiscountBurgersCosts.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
         cart.setDeliveryIncluded(cartDto.isDeliveryIncluded());
-        cart.setBurgersCost(cost);
+        cart.setBurgersCost(totalCost);
+        cart.setDiscount((totalCost.divide(noDiscountCost).multiply(new BigDecimal(100))));
         return conversionService.convert(cartRepository.save(cart), CartDto.class);
     }
 
@@ -81,5 +91,19 @@ public class CartServiceImpl implements CartService {
                 .map(burger -> conversionService.convert(burger, BurgerDto.class))
                 .collect(Collectors.toList());
         return burgerList;
+    }
+
+    @Override
+    public TicketDto createTicket(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User is not found"));
+        Cart cart = user.getCart();
+        Ticket ticket = new Ticket();
+        ticket.setUser(user);
+        ticket.setCost(cart.getBurgersCost());
+        List<Burger> burgers = cart.getBurgers();
+        ticket.setBurgers(new ArrayList(burgers));
+        ticket.setDiscount(cart.getDiscount());
+        ticket.setPaid(false);
+        return conversionService.convert(ticketRepository.save(ticket), TicketDto.class);
     }
 }

@@ -1,8 +1,11 @@
 package com.market.burgermarket.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
 
 public class UserDto implements Serializable {
     @JsonProperty("id")
@@ -13,10 +16,30 @@ public class UserDto implements Serializable {
     private String lastName;
     @JsonProperty("email")
     private String email;
+    @JsonProperty("bonus_points")
+    private BigDecimal bonusPoints;
     @JsonProperty("address")
     private AddressDto address;
     @JsonProperty("cart")
     private CartDto cart;
+    @JsonIgnore
+    private List<TicketDto> tickets;
+
+    public BigDecimal getBonusPoints() {
+        return bonusPoints;
+    }
+
+    public void setBonusPoints(BigDecimal bonusPoints) {
+        this.bonusPoints = bonusPoints;
+    }
+
+    public List<TicketDto> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<TicketDto> tickets) {
+        this.tickets = tickets;
+    }
 
     public Long getId() {
         return id;

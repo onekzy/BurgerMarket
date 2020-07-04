@@ -19,6 +19,16 @@ public class CartDto implements Serializable {
     private List<BurgerDto> burgers;
     @JsonProperty("cost")
     private BigDecimal burgersCost;
+    @JsonIgnore
+    private BigDecimal discount;
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
 
     public void setId(Long id) {
         this.id = id;

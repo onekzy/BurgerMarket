@@ -24,6 +24,7 @@ public class BurgerDtoToBurgerConverter implements Converter<BurgerDto, Burger> 
         Burger burger = new Burger();
         burger.setId(burgerDto.getId());
         burger.setName(burgerDto.getName());
+        burger.setDiscount(burgerDto.getDiscount());
         burger.setCart(conversionService.convert(burgerDto.getCart(), Cart.class));
         burger.setMenu(conversionService.convert(burgerDto.getMenu(), Menu.class));
         return burger;

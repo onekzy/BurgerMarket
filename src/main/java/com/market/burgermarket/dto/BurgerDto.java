@@ -1,11 +1,11 @@
 package com.market.burgermarket.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.market.burgermarket.entities.Menu;
+import com.market.burgermarket.entities.Ticket;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BurgerDto implements Serializable {
@@ -13,8 +13,12 @@ public class BurgerDto implements Serializable {
     private Long id;
     @JsonProperty("name")
     private String name;
+    @JsonProperty("discount")
+    private BigDecimal discount;
     @JsonIgnore
     private List<IngredientDto> ingredients;
+    @JsonIgnore
+    private List<Ticket> tickets;
     @JsonIgnore
     private CartDto cart;
     @JsonIgnore
@@ -23,6 +27,22 @@ public class BurgerDto implements Serializable {
     private Long menuId;
     @JsonProperty("menuName")
     private String menuName;
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 
     public void setMenuId(Long menuId) {
         this.menuId = menuId;

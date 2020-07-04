@@ -2,7 +2,6 @@ package com.market.burgermarket.services.impl;
 
 import com.market.burgermarket.dto.BurgerDto;
 import com.market.burgermarket.dto.MenuDto;
-import com.market.burgermarket.dto.UserDto;
 import com.market.burgermarket.entities.Burger;
 import com.market.burgermarket.entities.Menu;
 import com.market.burgermarket.entities.User;
