@@ -42,7 +42,7 @@ public class CartController {
         return cartService.createCart(cartDto);
     }
 
-    @PostMapping(value = "{id}/ticket")
+    @PostMapping(value = "/ticket")
     public TicketDto createTicket(@PathVariable("userId") Long userId) {
         return cartService.createTicket(userId);
     }
